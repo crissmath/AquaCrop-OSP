@@ -69,10 +69,27 @@ for i in range(len(dflist)): # Leemos los datos de salida
 # Combinamos los resultados
 all_outputs = pd.concat(outlist,axis=0)
 
-# Figura 
+###### GRAFICOS ######
+# Nombres
+names=['Sandy Loam','Clay']
+# Combinar los 2 modelos en una dataframe
+dflist=[model._outputs.final_stats,
+        model_clay._outputs.final_stats] 
+# inicializamos la variable para guardar los resultados 
+outlist=[]
+for i in range(len(dflist)): # Leemos los datos de salida 
+    temp = pd.DataFrame(dflist[i]['Yield (tonne/ha)']) # Tomamos el valor de toneladas por hectareas
+    temp['label']=names[i] # Agregamos la etiqueta del tipo de suelo 
+    outlist.append(temp) # Guardar los resultados en la variable que inicializamos antes
+# Combinamos los resultados
+all_outputs = pd.concat(outlist,axis=0)
+#create figure
 fig,ax=plt.subplots(1,1,figsize=(10,7),)
-#  box plot
-sns.boxplot(data=all_outputs,x='label',y='Rendimiento (tonelada/ha)',ax=ax,)
+
+# create box plot
+sns.boxplot(data=all_outputs,x='label',y='Yield (tonne/ha)',ax=ax,)
+
+# labels and font sizes
 ax.tick_params(labelsize=15)
 ax.set_xlabel(' ')
 ax.set_ylabel('Yield (tonne/ha)',fontsize=18)
