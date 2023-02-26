@@ -54,21 +54,6 @@ model_clay = AquaCropModel(sim_start_time=f'{1979}/10/01',
 
 model_clay.run_model(till_termination=True)
 
-###### GRAFICOS ##################
-# Nombres
-names=['Sandy Loam','Clay']
-# Combinar los 2 modelos en una dataframe
-dflist=[model._outputs.final_stats,
-        model_clay._outputs.final_stats] 
-# inicializamos la variable para guardar los resultados 
-outlist=[]
-for i in range(len(dflist)): # Leemos los datos de salida 
-    temp = pd.DataFrame(dflist[i]['Yield (tonne/ha)']) # Tomamos el valor de toneladas por hectareas
-    temp['label']=names[i] # Agregamos la etiqueta del tipo de suelo 
-    outlist.append(temp) # Guardar los resultados en la variable que inicializamos antes
-# Combinamos los resultados
-all_outputs = pd.concat(outlist,axis=0)
-
 ###### GRAFICOS ######
 # Nombres
 names=['Sandy Loam','Clay']
